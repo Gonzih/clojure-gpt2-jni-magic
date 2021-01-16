@@ -17,6 +17,9 @@
      :past past
      :token token}))
 
+(defn decode-sequence [{:keys [generated-tokens]}]
+  (py/$a tokenizer decode generated-tokens))
+
 (defn generate-text [starting-text num-of-words-to-predict]
   (let [tokens (into [] ($a tokenizer encode starting-text))
         context (torch/tensor [tokens])
@@ -34,5 +37,5 @@
     (println text)
     text))
 
-(defn -main [_]
+(defn -main []
   (generate-text "Potato is a " 20))
