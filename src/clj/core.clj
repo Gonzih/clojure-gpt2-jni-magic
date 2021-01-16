@@ -1,25 +1,24 @@
 (ns core
   (:require [libpython-clj.require :refer [require-python]]
-            [libpython-clj.python :as py :refer [py. py.. py.- $a]]
-            ))
+            [libpython-clj.python :as py :refer [py. py.. py.- $a]]))
 
 (require-python 'torch)
 (require-python 'transformers)
 
-(def tokenizer (py/$a transformers/GPT2Tokenizer from_pretrained "gpt2"))
-(def model (py/$a transformers/GPT2LMHeadModel from_pretrained "gpt2"))
+(def tokenizer ($a transformers/GPT2Tokenizer from_pretrained "gpt2"))
+(def model ($a transformers/GPT2LMHeadModel from_pretrained "gpt2"))
 
 (defn generate-sequence-step [{:keys [generated-tokens context past]}]
   (let [[output past] (model context :past past)
         token (-> (torch/argmax (first output)))
-        new-generated  (conj generated-tokens (py/$a token tolist))]
+        new-generated  (conj generated-tokens ($a token tolist))]
     {:generated-tokens new-generated
-     :context (py/$a token unsqueeze 0)
+     :context ($a token unsqueeze 0)
      :past past
      :token token}))
 
 (defn generate-text [starting-text num-of-words-to-predict]
-  (let [tokens (into [] (py/$a tokenizer encode starting-text))
+  (let [tokens (into [] ($a tokenizer encode starting-text))
         context (torch/tensor [tokens])
         result (reduce
                 (fn [r i]
@@ -35,4 +34,4 @@
     (println text)
     text))
 
-(generate-text "Clojure is a dynamic, general purpose programming language, combining the approachability and interactive" 20)
+(generate-text "Potato is a " 20)
