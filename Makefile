@@ -6,3 +6,6 @@ nrepl:
 
 run:
 	clj -m hello
+
+shell:
+	nix-shell shell.nix
