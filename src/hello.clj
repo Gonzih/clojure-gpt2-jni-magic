@@ -1,4 +1,4 @@
-(ns core
+(ns hello
   (:require [libpython-clj.require :refer [require-python]]
             [libpython-clj.python :as py :refer [py. py.. py.- $a]]))
 
@@ -34,4 +34,5 @@
     (println text)
     text))
 
-(generate-text "Potato is a " 20)
+(defn -main [_]
+  (generate-text "Potato is a " 20))
