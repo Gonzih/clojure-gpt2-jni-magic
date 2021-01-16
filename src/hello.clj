@@ -38,4 +38,4 @@
     text))
 
 (defn -main []
-  (generate-text "Potato is a " 20))
+  (generate-text "Who is potato " 20))
